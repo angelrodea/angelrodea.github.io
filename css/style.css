@@ -1,12 +1,7 @@
-:root {
-    --bg-color: black;
-    --primary-color: blue;
-}
-
 body {
     min-height: 100vh;
     position: relative;
-    padding-bottom: 3em;
+    padding-bottom: 4.5em;
     margin: 0;
 }
 
