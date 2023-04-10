@@ -1,4 +1,4 @@
-    <footer class="text-center text-lg-start bg-dark text-muted mt-5" data-bs-theme="dark">
+    <footer class="text-center text-lg-start bg-dark text-muted" data-bs-theme="dark">
         <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
             © 2023 Copyright:
             <a class="text-reset fw-bold" href="#">jeandepiagetdeoriente.com</a>
