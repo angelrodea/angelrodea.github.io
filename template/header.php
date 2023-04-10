@@ -1,3 +1,10 @@
+<?php 
+    function claseActiva($pagina) {
+        if (basename($_SERVER['PHP_SELF']) == $pagina) {
+            echo 'active';
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -15,7 +22,7 @@
 <body>
     <header>
         <div class="header-container">
-            <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark fixed-top" data-bs-theme="dark">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark navbar-fixed-top" data-bs-theme="dark">
                 <div class="container-fluid px-3">
                     <a class="navbar-brand" href="index.php"><img src="img/logo.png" style="height:30px;"></a>
                     <span class="navbar-brand">Jean Piaget de oriente</span>
@@ -27,43 +34,26 @@
                     <div class="collapse navbar-collapse" id="navbarText">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item nav-mar">
-                                <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
-                            </li>
-                            <!-- <li class="nav-item nav-mar">
-                                <a class="nav-link" href="#">Comunicados</a>  QUITAR Agregar a inicio
-                            </li>-->
-                            <li class="nav-item nav-mar">
-                                <a class="nav-link" href="#">Admisiones</a>
-                            </li>
-                            <!--<li class="nav-item dropdown nav-mar">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                                    aria-expanded="false">Servicios</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Primaria</a></li>
-                                    <li><a class="dropdown-item" href="#">Secundaria</a></li>
-                                    <li><a class="dropdown-item" href="#">Preparatoria</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
-                                </ul>
-                            </li> -->
-                            <li class="nav-item nav-mar">
-                                <a class="nav-link" href="#">Profesores</a>
+                                <a class="nav-link <?php claseActiva('index.php'); ?>" aria-current="page" href="index.php">Inicio</a>
                             </li>
                             <li class="nav-item nav-mar">
-                                <a class="nav-link" href="#">Comentarios</a>
+                                <a class="nav-link <?php claseActiva('admisiones.php'); ?>" href="admisiones.php">Admisiones</a>
                             </li>
                             <li class="nav-item nav-mar">
-                                <a class="nav-link" href="#">Contacto</a>
+                                <a class="nav-link <?php claseActiva('profesores.php'); ?>" href="profesores.php">Profesores</a>
+                            </li>
+                            <li class="nav-item nav-mar">
+                                <a class="nav-link <?php claseActiva('comentarios.php'); ?>" href="comentarios.php">Comentarios</a>
+                            </li>
+                            <li class="nav-item nav-mar">
+                                <a class="nav-link <?php claseActiva('contacto.php'); ?>" href="contacto.php">Contacto</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
-            <div class="jumbotron">
+            <div class="jumbotron text-center py-3">
                 <h1>Jean Piaget de oriente</h1>
-                <p>Frase de algo!</p>
             </div>
         </div>
     </header>
