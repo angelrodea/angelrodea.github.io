@@ -24,6 +24,13 @@ footer {
     border-color: rgba(0,0,0,0.3); 
 }
 
+/*------------- COMENTARIOS -------------*/
+.comentarios {
+    border-style: solid;
+    border-radius: 8px;
+    max-height: 10em;
+}
+
 
 /*------------- LOGIN -------------*/
 
