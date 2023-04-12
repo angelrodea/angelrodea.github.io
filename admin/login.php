@@ -1,3 +1,9 @@
+<?php
+    if ($_POST) {
+        header("Location: http://localhost/app/index.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -24,7 +30,7 @@
                                         <div class="login-box">
                                             <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                                             <p class="text-white-50 mb-5">Please enter your login and password!</p>
-                                            <form>
+                                            <form method="POST">
                                                 <div class="user-box">
                                                     <input type="text" name="user" required>
                                                     <label>Username</label>
@@ -34,7 +40,7 @@
                                                     <label>Password</label>
                                                 </div>
                                                 <center>
-                                                    <button type="submit">Iniciar sesión<span></span></button>
+                                                    <button type="submit">Acceder<span></span></button>
                                                     <!--<a href="#">SEND<span></span></a>-->
                                                 </center>
                                             </form>
