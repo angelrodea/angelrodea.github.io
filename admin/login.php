@@ -1,6 +1,21 @@
 <?php
-    if ($_POST) {
-        header("Location: http://localhost/app/index.php");
+    error_reporting(0);
+    include("../db.php");
+
+    if (isset($_POST['access'])){ 
+        $user = 'admin';
+        $pass = 'admin';
+    
+        $ruser = $_POST['user'];
+        $rpass = $_POST['pass'];
+        echo $ruser . $rpass;
+        if ($user == $ruser && $pass == $rpass) {
+            header("Location: http://localhost/app/index.php");
+        } else {
+            $mensaje.="<div class='container'><div class='alert alert-danger' role='alert'>
+                        A simple danger alert—check it out!
+                        </div></div>";
+        }
     }
 ?>
 
@@ -40,12 +55,13 @@
                                                     <label>Password</label>
                                                 </div>
                                                 <center>
-                                                    <button type="submit">Acceder<span></span></button>
+                                                    <button type="submit" name="access">Acceder<span></span></button>
                                                     <!--<a href="#">SEND<span></span></a>-->
                                                 </center>
                                             </form>
                                         </div>
                                     </div>
+                                    <?php echo $mensaje; ?>
                                 </div>
                             </div>
                         </div>
