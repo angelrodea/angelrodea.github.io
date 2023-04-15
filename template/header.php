@@ -1,4 +1,26 @@
 <?php 
+    #<!------------------- Sesión ------------------------->
+    session_start();
+    if (isset($_POST['logout'])) {
+        session_unset();
+        session_destroy();
+        header("Location: http://localhost/app/index.php");
+        exit;
+    }
+    #<!------------------- Pruebas ------------------------->
+    #<!------------------- Borrar ------------------------->
+    if (isset($_POST['login'])) {
+        header("Location: http://localhost/app/admin/login.php");
+    }
+    function verifySession(){  
+        // Verificar si la variable de sesión existe
+        if (isset($_SESSION['user'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    #<!------------------- Clase Activa ------------------------->
     function claseActiva($pagina) {
         if (basename($_SERVER['PHP_SELF']) == $pagina) {
             echo 'active';
@@ -49,6 +71,16 @@
                                 <a class="nav-link <?php claseActiva('contacto.php'); ?>" href="contacto.php">Contacto</a>
                             </li>
                         </ul>
+                        <?php if (verifySession()): ?>
+                            <form method="post" class="d-flex">
+                                <input type="submit" name="logout" value="Cerrar Sesión" class="btn btn-outline-danger">
+                            </form>
+                        <!------------------- BORRAR ------------------------->
+                        <?php else: ?>
+                            <form method="post" class="d-flex">
+                                <input type="submit" name="login" value="Iniciar Sesión" class="btn btn-outline-light">
+                            </form>
+                        <?php endif; ?>
                     </div>
                 </div>
             </nav>
