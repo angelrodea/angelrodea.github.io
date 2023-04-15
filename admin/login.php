@@ -1,21 +1,42 @@
 <?php
+    session_start();
     error_reporting(0);
     include("../db.php");
 
     if (isset($_POST['access'])){ 
-        $user = 'admin';
-        $pass = 'admin';
-    
-        $ruser = $_POST['user'];
-        $rpass = $_POST['pass'];
-        echo $ruser . $rpass;
-        if ($user == $ruser && $pass == $rpass) {
-            header("Location: http://localhost/app/index.php");
-        } else {
-            $mensaje.="<div class='container'><div class='alert alert-danger' role='alert'>
-                        A simple danger alert—check it out!
-                        </div></div>";
+        $ruser = mysqli_real_escape_string($connection, $_POST['user']);
+        $rpass = mysqli_real_escape_string($connection, $_POST['pass']);
+        $userok = '';
+        $passok = '';
+        
+        $consult = "SELECT * FROM user WHERE user = '$ruser'";
+        
+        if ($result = $connection->query($consult)) {
+            while ($row = $result->fetch_array()) {
+                $userok = $row['user'];
+                $passok = $row['password'];
+            }
+            $result->close();
         }
+        $connection->close();
+        if (isset($ruser) && isset($rpass)) {
+            if ($ruser == $userok && password_verify($rpass, $passok)){
+                $_SESSION['login'] = TRUE;
+                $_SESSION['user'] = $ruser;
+                header("Location: http://localhost/app/index.php");
+            } else {
+                $mensaje.="<div class='container'><div class='alert alert-danger mt-4' role='alert'>
+                            Credenciales incorrectas
+                            </div></div>";
+            }
+        }
+    }
+    # LOGOUT
+    if (isset($_POST['logout'])) { // Comprobar si se ha enviado el formulario de cierre de sesión
+        session_unset(); // Eliminar todas las variables de sesión
+        session_destroy(); // Destruir la sesión
+        header("Location: http://localhost/app/index.php"); // Redirigir a la página de inicio de sesión
+        exit;
     }
 ?>
 
@@ -29,7 +50,7 @@
     <!-- Boostrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <title>Admin</title>
 </head>
 
@@ -44,26 +65,27 @@
                                     <div class="mb-md-5 mt-md-4 pb-5">
                                         <div class="login-box">
                                             <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                                            <p class="text-white-50 mb-5">Please enter your login and password!</p>
+                                            <p class="text-white-50 mb-5">Please enter your user and password!</p>
                                             <form method="POST">
-                                                <div class="user-box">
-                                                    <input type="text" name="user" required>
-                                                    <label>Username</label>
+                                                <div>
+                                                    <input type="text" name="user" class="form-control rounded-left mb-4" 
+                                                        placeholder="Username" required>
                                                 </div>
-                                                <div class="user-box">
-                                                    <input type="password" name="pass" required>
-                                                    <label>Password</label>
+                                                <div>
+                                                    <input type="password" name="pass" class="form-control form-control-md mb-5" 
+                                                        placeholder="********"/>
                                                 </div>
                                                 <center>
-                                                    <button type="submit" name="access">Acceder<span></span></button>
-                                                    <!--<a href="#">SEND<span></span></a>-->
+                                                    <button type="submit" name="access" class="btn btn-outline-light">
+                                                        Acceder <span></span>
+                                                    </button>
                                                 </center>
                                             </form>
                                         </div>
                                     </div>
-                                    <?php echo $mensaje; ?>
                                 </div>
                             </div>
+                            <?php echo $mensaje; ?>
                         </div>
                     </div>
                 </div>
