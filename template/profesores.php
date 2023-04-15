@@ -29,4 +29,10 @@
                         perspiciatis earum. Odio, eaque praesentium.
                     </p>
                 </div>
+                <?php if (verifySession()): ?>
+                    <form method="post" class="d-flex">
+                        <input type="submit" name="edit" value="Modificar" class="btn btn-outline-primary m-1">
+                        <input type="submit" name="delete" value="Eliminar" class="btn btn-outline-danger m-1">
+                    </form>
+                <?php endif; ?>
             </div>
