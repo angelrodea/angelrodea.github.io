@@ -1,12 +1,9 @@
 <?php
-    // eliminar_comentario.php
-
-    // Verificar si se ha enviado el formulario de eliminación
-    if (isset($_POST['delComment'])) {
+    if (isset($_POST['id_comment'])) {
         include('db.php');
-        $id_comentario = $_POST['id_comment'];
+        $id_comment = $_POST['id_comment'];
 
-        $query = "DELETE FROM comentarios WHERE id = $id_comentario";
+        $query = "DELETE FROM comentarios WHERE id = $id_comment";
 
         // Ejecutar consulta SQL
         $resultado = mysqli_query($connection, $query);
