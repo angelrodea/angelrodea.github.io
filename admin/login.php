@@ -76,6 +76,11 @@
                                                         placeholder="********"/>
                                                 </div>
                                                 <center>
+                                                    <a href="change_pass.php" name="" class="text-white">
+                                                        Olvidaste la contraseña?<span></span>
+                                                    </a>
+                                                </center>
+                                                <center>
                                                     <button type="submit" name="access" class="btn btn-outline-light">
                                                         Acceder <span></span>
                                                     </button>
