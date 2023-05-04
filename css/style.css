@@ -31,6 +31,10 @@ footer {
     max-height: 10em;
 }
 
+/*------------- USUARIO -------------*/
+.bg-border {
+    background-color: #f7f7f7;
+}
 
 /*------------- LOGIN -------------*/
 
