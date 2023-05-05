@@ -1,8 +1,7 @@
-<?php include("../template/header.php");?>
+<?php include("../template/usr_header.php");?>
     <main>
         <div class="container mb-4">
 
-            <!------------------- Actividades ------------------------->
             <div class="row">
                 <div class="col-md-3">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -25,6 +24,7 @@
                         <div class="tab-pane fade show active bg-border border border-dark rounded-3 p-3" id="v-pills-datos" 
                             role="tabpanel" aria-labelledby="v-pills-datos-tab">
                             <!------------ DATOS -------------------->
+                            <h2 class="mb-3">Mis datos</h2>
                             <form class="">
                                 <div class="form-group row mb-3">
                                     <label class="col-lg-1 col-form-label me-4" for="name">Nombre(s)</label>
@@ -124,33 +124,10 @@
                                     </form>
                                 </div>
                             </div>
-                            
-                            <!--
-                                <div class="form-group">
-                                <label for="calle">Calle:</label>
-                                <input type="text" class="form-control" id="calle">
-                                </div>
-                                <div class="form-group">
-                                <label for="numero">Número:</label>
-                                <input type="text" class="form-control" id="numero">
-                                </div>
-                                <div class="form-group">
-                                <label for="ciudad">Ciudad:</label>
-                                <input type="text" class="form-control" id="ciudad">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Enviar</button>
-                                <div class="mb-3">
-                                    <label class="form-label">Nombre(s)</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Nombre" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Comentario</label>
-                                    <textarea class="form-control" name="comment" rows="3" required></textarea>
-                                </div>-->
-                                <div class="mt-3">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" name="btnComment" class="btn btn-primary">Aceptar</button>
-                                </div>
+                            <div class="mt-3">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" name="btnComment" class="btn btn-primary">Aceptar</button>
+                            </div>
                             </form>
                         </div>
                         <div class="tab-pane fade p-3" id="v-pills-pago" role="tabpanel" aria-labelledby="v-pills-pago-tab">
@@ -324,4 +301,4 @@
             </div>
         </div>
     </main>
-<?php include("../template/footer.php");?>
+<?php include("../template/usr_footer.php");?>
