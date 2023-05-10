@@ -3,7 +3,7 @@
         include('db.php');
         $profesor_id = $_POST['profesor_id'];
 
-        $query = "DELETE FROM profesors WHERE id = $profesor_id";
+        $query = "DELETE FROM profesor WHERE id_profesor = $profesor_id";
 
         // Ejecutar consulta SQL
         $resultado = mysqli_query($connection, $query);

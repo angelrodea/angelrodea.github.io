@@ -7,7 +7,7 @@
         $aptitude = $_POST['aptitude'];
         $other = $_POST['other'];
 
-        $sql = "INSERT INTO profesors (name, perfil, experience, aptitudes, others) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO profesor (nombre, perfil, experiencia, aptitudes, otros) VALUES (?, ?, ?, ?, ?)";
         $stmt = $connection->prepare($sql);
         $stmt->bind_param("sssss", $name, $perfil, $exp, $aptitude, $other); // "sssss" indica que los valores son de tipo string
         if ($stmt->execute()) {

@@ -1,6 +1,6 @@
 <?php   
     $server="localhost";
-    $db="escuela";
+    $db="test";
     $user="root";
     $pass="";
     try {
