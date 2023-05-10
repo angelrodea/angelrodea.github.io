@@ -1,7 +1,7 @@
 <?php 
     include("template/header.php"); 
     include("db/db.php");
-    error_reporting(0);
+    $mensajeError = "";
 
 
     if(isset($_POST['btnComment'])) {
@@ -24,44 +24,44 @@
             <h1 class="mb-4">Comentarios</h1>
             <?php
                 echo $mensajeError;
-                $query = "SELECT * FROM comentarios";
+                $query = "SELECT c.id_comentario, a.tutor, c.comentario, c.fecha FROM comentario c
+                        INNER JOIN alumno a ON c.id_alumno = a.id_alumno";
                 $result = $connection->query($query);
 
                 // Renderizar el template para cada comentario
                 while ($row = $result->fetch_assoc()) {
-                    $id = $row['id'];
-                    $nombre = $row['nombre'];
+                    $id = $row['id_comentario'];
+                    $nombre = $row['tutor'];
                     $comentario = $row['comentario'];
                     $comentario = nl2br(str_replace("\\r\\n", "\n", $comentario));
                     $fecha = $row['fecha'];
-
-                    echo '<div class="my-3">
-                            <div class="mb-2 row">
-                                <h4 class="col-md-9">Nombre: ' . $nombre . '</h4>
-                                <span class="col-md-2 pt-2 text-end">' . $fecha . '</span>
-                                <div class="col-md-1">';
-                                if (verifySession()):
-                    echo '          <form method="POST">
-                                        <input type="hidden" name="id_comment" id="deleteCommentId" value="' . $id . '">
+            ?>
+                    <div class="my-3">
+                        <div class="mb-2 row">
+                            <h4 class="col-md-9">Nombre:  <?php echo $nombre ?> </h4>
+                            <span class="col-md-2 pt-2 text-end"> <?php echo $fecha ?> </span>
+                            <div class="col-md-1">
+                                <?php if (verifySession()): ?>
+                                    <form method="POST">
+                                        <input type="hidden" name="id_comment" id="deleteCommentId" value="<?php echo $id ?>">
                                         <button type="button" name="delComment" class="btn text-danger" 
-                                        data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                        onclick="setId(' . $id . ')">
+                                            data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                            onclick="setCommentId(<?php echo $id ?>)">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" 
-                                            class="bi bi-x-circle" viewBox="0 0 16 16">
+                                                class="bi bi-x-circle" viewBox="0 0 16 16">
                                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 
                                                 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 
                                                 5.354a.5.5 0 0 1 0-.708z"/>
                                             </svg>
                                         </button>
-                                    </form>';
-                                endif;
-                    echo '      </div>
+                                    </form>
+                                <?php endif;?>
                             </div>
-                            <div class="overflow-auto p-3 comentarios">' . $comentario . '</div>
-                          </div>';
-                }
-            ?>
+                        </div>
+                        <div class="overflow-auto p-3 comentarios"><?php echo $comentario ?></div>
+                    </div>
+            <?php } ?>
 
             <div class="text-center mb-4">
                 <button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" 
