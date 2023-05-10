@@ -64,9 +64,26 @@
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
-                                    <label class="col-lg-1 col-form-label me-4" for="name">Grado</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="3°" required>
+                                    <label class="col-lg-3 col-form-label" for="name">Grado</label>
+                                    <div class="col-lg-2 p-0">
+                                        <select class="form-select" aria-label="Default select example"required>
+                                            <option selected>Seleccionar</option>
+                                            <option value="1">1°</option>
+                                            <option value="2">2°</option>
+                                            <option value="3">3°</option>
+                                            <option value="4">4°</option>
+                                            <option value="5">5°</option>
+                                        </select>
+                                    </div>
+                                    <label class="col-lg-2"></label>
+                                    <label class="col-lg-1 col-form-label me-4" for="name">Grupo</label>
+                                    <div class="col-lg-2 ps-0">
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected>Seleccionar</option>
+                                            <option value="1">A</option>
+                                            <option value="2">B</option>
+                                            <option value="3">C</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
@@ -78,7 +95,8 @@
                                 <div class="form-group row mb-3">
                                     <label class="col-lg-1 col-form-label me-4" for="name">Correo</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="fdsfijds@gmail.com" required>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="fdsfijds@gmail.com" 
+                                            required>
                                     </div>
                                 </div>
                                 <div class="card position-relative">
@@ -86,39 +104,37 @@
                                     <div class="card-body">
                                     <form>
                                         <div class="form-group row mb-3">
-                                            <div class="col-lg-6 form-floating mb-3">
+                                            <div class="col-lg-8 form-floating mb-3">
                                                 <input type="text" class="form-control" name="name" placeholder="Calle" required>
                                                 <label for="name" class="ps-4">Calle</label>
                                             </div>
                                             <div class="col-lg-3 form-floating mb-3">
                                                 <input type="text" class="form-control" name="name" placeholder="Numero" required>
-                                                <label for="name" class="ps-4">Numero</label>
-                                            </div>
-                                            <div class="col-lg-3 form-floating mb-3">
-                                                <input type="text" class="form-control" name="name" placeholder="C.P." required>
-                                                <label for="name" class="ps-4">C.P.</label>
+                                                <label for="name" class="ps-4">Número</label>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-3">
-                                            <label class="col-lg-2 col-form-label me-4" for="name">Entidad</label>
+                                        <label class="col-lg-2 col-form-label me-4" for="name">Colonia</label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="CDMX" required>
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="Tepalcates" 
+                                                    required>
                                             </div>
                                             <label class="col-lg-1"></label>
                                             <label class="col-lg-2 col-form-label" for="name">Municipo</label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Iztapalapa" required>
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="Iztapalapa" 
+                                                    required>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-3">
-                                            <label class="col-lg-2 col-form-label me-4" for="name">Colonia</label>
+                                            <label for="name" class="col-lg-2 col-form-label me-4">C.P.</label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Tepalcates" required>
+                                                <input type="text" class="form-control" name="name" placeholder="C.P." required>
                                             </div>
                                             <label class="col-lg-1"></label>
-                                            <label class="col-lg-2 col-form-label" for="name">Localidad</label>
+                                            <label class="col-lg-2 col-form-label" for="name">Entidad</label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="09210" required>
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="CDMX" required>
                                             </div>
                                         </div>
                                     </form>
