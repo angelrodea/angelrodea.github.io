@@ -1,6 +1,6 @@
 // Asignar el ID del comentario al modal
-function setId(idComentario) {
-    document.getElementById('id_comment').value = idComentario;
+function setCommentId(idComentario) {
+    document.getElementById('id_comment').value = parseInt(idComentario);
 }
 
 function deleteComment() {
