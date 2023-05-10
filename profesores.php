@@ -7,16 +7,16 @@
 
             <?php
                 include("db/db.php");
-                $query = "SELECT * FROM profesors";
+                $query = "SELECT * FROM profesor";
                 $result = mysqli_query($connection, $query);
 
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $id = $row['id'];
-                    $name = $row['name'];
+                    $id = $row['id_profesor'];
+                    $name = $row['nombre'];
                     $perfil = $row['perfil'];
-                    $experience = $row['experience'];
+                    $experience = $row['experiencia'];
                     $aptitudes = $row['aptitudes'];
-                    $others = $row['others'];
+                    $others = $row['otros'];
             ?>
 
             <div class="row profesor my-3 mx-2 py-3">
@@ -89,12 +89,6 @@
                                         <label class="form-label">Otros datos</label>
                                         <textarea class="form-control" name="other" rows="1"></textarea>
                                     </div>
-                                    <!--
-                                    <div class="mb-3">
-                                        <label for="formFile" class="form-label">Subir foto</label>
-                                        <input class="form-control" type="file" name="photo">
-                                    </div>
-                                    -->
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
