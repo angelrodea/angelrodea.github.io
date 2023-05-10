@@ -9,11 +9,11 @@
         $userok = '';
         $passok = '';
         
-        $consult = "SELECT * FROM user WHERE user = '$ruser'";
+        $consult = "SELECT * FROM usuario WHERE correo = '$ruser'";
         
         if ($result = $connection->query($consult)) {
             while ($row = $result->fetch_array()) {
-                $userok = $row['user'];
+                $userok = $row['correo'];
                 $passok = $row['password'];
             }
             $result->close();
@@ -23,7 +23,7 @@
             if ($ruser == $userok && password_verify($rpass, $passok)){
                 $_SESSION['login'] = TRUE;
                 $_SESSION['user'] = $ruser;
-                header("Location: http://localhost/app/index.php");
+                header("Location: http://localhost/app/admin/solicitantes.php");
             } else {
                 $mensaje.="<div class='container'><div class='alert alert-danger mt-4' role='alert'>
                             Credenciales incorrectas
