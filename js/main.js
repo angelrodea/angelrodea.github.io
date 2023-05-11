@@ -73,22 +73,19 @@ $(document).ready(function() {
 
 
 // VALIDACION  ADMISIONES
-// Obtener el campo de selección del grado actual
-var gradoActual = document.getElementById("grado_actual");
-
-// Obtener los campos de entrada de archivos de boleta y kinder
-var campoBoleta = document.getElementById("campo_boleta");
-var campoKinder = document.getElementById("campo_kinder");
-
-// Mostrar u ocultar el campo de entrada de archivos correspondiente según la opción seleccionada en el campo "Grado actual"
-gradoActual.addEventListener("change", function() {
-    if (gradoActual.value == "6") {
-        // Si se selecciona "Ninguno", mostrar el campo de entrada de archivos para la constancia de kinder y ocultar el campo de entrada de archivos para la boleta
-        campoBoleta.style.display = "none";
-        campoKinder.style.display = "block";
-    } else {
-        // Si se selecciona un grado del 1 al 5, mostrar el campo de entrada de archivos para la boleta y ocultar el campo de entrada de archivos para la constancia de kinder
-        campoBoleta.style.display = "block";
-        campoKinder.style.display = "none";
-    }
-});
+if (window.location.pathname.endsWith("admisiones.php")) {
+    var gradoActual = document.getElementById("grado");
+    var campoBoleta = document.getElementById("campo_boleta");
+    var campoKinder = document.getElementById("campo_kinder");
+  
+    // Mostrar u ocultar el campo de entrada de archivos correspondiente según la opción seleccionada en el campo "Grado actual"
+    gradoActual.addEventListener("change", function() {
+        if (gradoActual.value == "Ninguno") {
+            campoBoleta.style.display = "none";
+            campoKinder.style.display = "block";
+        } else {
+            campoBoleta.style.display = "block";
+            campoKinder.style.display = "none";
+        }
+    });
+}  
