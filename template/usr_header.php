@@ -7,29 +7,7 @@
         header("Location: http://localhost/app/index.php");
         exit;
     }
-    #<!------------------- Pruebas ------------------------->
-    #<!------------------- Borrar ------------------------->
-    if (isset($_POST['login'])) {
-        header("Location: http://localhost/app/admin/login.php");
-    }
-    function verifySession(){  
-        // Verificar si la variable de sesión existe
-        if (isset($_SESSION['user'])) {
-            if ($_SESSION['user'] == 'admin') {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-    #<!------------------- Clase Activa ------------------------->
-    function claseActiva($pagina) {
-        if (basename($_SERVER['PHP_SELF']) == $pagina) {
-            echo 'active';
-        }
-    }
+    $name = $_SESSION['user']['nombre'] . " " . $_SESSION['user']['paterno']
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -54,7 +32,11 @@
                 <a class="navbar-brand" href="../index.php"><img src="../img/logo.png" style="height:30px;">
                     <span class="navbar-brand ms-2">Jean Piaget de oriente</span>
                 </a>
-                    <center><h2 class="navbar-text text-uppercase">Usuario Appellido</h2></center>
+                    <center>
+                        <h2 class="navbar-text text-uppercase">
+                            <?php echo $name ?>
+                        </h2>
+                    </center>
                     <form method="POST" class="d-flex">
                         <input type="submit" name="logout" value="Cerrar Sesión" class="btn btn-outline-danger">
                     </form>
