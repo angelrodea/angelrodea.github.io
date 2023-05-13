@@ -10,10 +10,10 @@
     #<!------------------- Pruebas ------------------------->
     #<!------------------- Borrar ------------------------->
     if (isset($_POST['login'])) {
-        header("Location: http://localhost/app/admin/login.php");
+        header("Location: http://localhost/app/user/login.php");
+        exit;
     }
-    function verifySession(){  
-        // Verificar si la variable de sesión existe
+    function verifySession(){
         if (isset($_SESSION['user'])) {
             return true;
         } else {
@@ -47,8 +47,9 @@
         <div class="header-container">
             <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark navbar-fixed-top" data-bs-theme="dark">
                 <div class="container-fluid px-3">
-                    <a class="navbar-brand" href="index.php"><img src="img/logo.png" style="height:30px;"></a>
-                    <span class="navbar-brand">Jean Piaget de oriente</span>
+                    <a class="navbar-brand" href="index.php"><img src="img/logo.png" style="height:30px;">
+                        <span class="navbar-brand ms-2">Jean Piaget de oriente</span>
+                    </a>
                     <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -73,6 +74,9 @@
                             </li>
                         </ul>
                         <?php if (verifySession()): ?>
+                            <form method="post" class="d-flex">
+                                <a href="user/usuario.php" class="btn btn-outline-light me-3">Mi Prefil</a>
+                            </form>
                             <form method="post" class="d-flex">
                                 <input type="submit" name="logout" value="Cerrar Sesión" class="btn btn-outline-danger">
                             </form>
