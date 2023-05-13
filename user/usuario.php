@@ -1,4 +1,7 @@
-<?php include("../template/usr_header.php");?>
+<?php 
+    include("../template/usr_header.php");
+    include("../db/db.php");
+?>
     <main>
         <div class="container mb-4">
 
@@ -24,127 +27,153 @@
                         <div class="tab-pane fade show active bg-border border border-dark rounded-3 p-3" id="v-pills-datos" 
                             role="tabpanel" aria-labelledby="v-pills-datos-tab">
                             <!------------ DATOS -------------------->
+                            <?php
+                                $id = $_SESSION['user']['id'];
+                                $query = "SELECT a.*, g.grupo FROM alumno a INNER JOIN grupo g 
+                                        ON a.id_grupo = g.id_grupo WHERE id_alumno = $id";
+                                $result = $connection->query($query);
+
+                                while ($row = $result->fetch_assoc()) {
+                                    $nombre = $row['nombre'];
+                                    $apPaterno = $row['ap_paterno'];
+                                    $apMaterno = $row['ap_materno'];
+                                    $curp = $row['curp'];
+                                    $fNacimiento = $row['fecha_nacimiento'];
+                                    $genero = $row['genero'];
+                                    $celular = $row['celular'];
+                                    $correo = $row['correo'];
+                                    $tutor = $row['tutor'];
+                                    $calle = $row['dir_calle'];
+                                    $numero = $row['dir_numero'];
+                                    $colonia = $row['dir_colonia'];
+                                    $municipio = $row['dir_municipio'];
+                                    $cp = $row['dir_cp'];
+                                    $entidad = $row['dir_entidad'];
+                                    
+                                    $grupos = $row['grupo'];
+                                    $grado = $grupos[0] . "°";
+                                    $status = $_SESSION['user']['status'];
+                                    if($status == 'inscrito'){
+                                        $grupo = substr($grupos, -1);
+                                    } else {
+                                        $grupo = 'Pendiente';
+                                    }
+                            ?>
                             <h2 class="mb-3">Mis datos</h2>
-                            <form class="">
+                            <div>
                                 <div class="form-group row mb-3">
                                     <label class="col-lg-1 col-form-label me-4" for="name">Nombre(s)</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Maria" required>
+                                        <input type="text" class="form-control" id="name" name="name" 
+                                            value="<?php echo $nombre;?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-lg-1 col-form-label me-4" for="name">Apellidos</label>
                                     <div class="col-lg-5">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Gerbaz" required>
+                                        <input type="text" class="form-control" id="name" name="name" 
+                                            value="<?php echo $apPaterno?>" readonly>
                                     </div>
                                     <div class="col-lg-5">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Rodriguez" required>
+                                        <input type="text" class="form-control" id="name" name="name" 
+                                            value="<?php echo $apMaterno?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-lg-1 col-form-label me-4" for="name">CURP</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="HGJFJMDFNSN067" required>
+                                        <input type="text" class="form-control" id="name" name="name" 
+                                            value="<?php echo $curp?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-lg-3 col-form-label" for="name">Fecha de nacimiento</label>
                                     <div class="col-lg-2 p-0">
-                                        <input type="date" class="form-control" id="name" name="name" required>
+                                        <input type="date" class="form-control" id="name" name="name" 
+                                            value="<?php echo $fNacimiento?>" readonly>
                                     </div>
                                     <label class="col-lg-2"></label>
                                     <label class="col-lg-1 col-form-label me-4" for="name">Genero</label>
                                     <div class="col-lg-2 ps-0">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Seleccionar</option>
-                                            <option value="1">Masculino</option>
-                                            <option value="2">Femenino</option>
-                                            <option value="3">Otro</option>
+                                        <select class="form-select" aria-label="Default select example" disabled>
+                                            <option selected><?php echo $genero?></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-lg-3 col-form-label" for="name">Grado</label>
                                     <div class="col-lg-2 p-0">
-                                        <select class="form-select" aria-label="Default select example"required>
-                                            <option selected>Seleccionar</option>
-                                            <option value="1">1°</option>
-                                            <option value="2">2°</option>
-                                            <option value="3">3°</option>
-                                            <option value="4">4°</option>
-                                            <option value="5">5°</option>
+                                        <select class="form-select" aria-label="Default select example" disabled>
+                                            <option selected><?php echo $grado ?></option>
                                         </select>
                                     </div>
                                     <label class="col-lg-2"></label>
                                     <label class="col-lg-1 col-form-label me-4" for="name">Grupo</label>
                                     <div class="col-lg-2 ps-0">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Seleccionar</option>
-                                            <option value="1">A</option>
-                                            <option value="2">B</option>
-                                            <option value="3">C</option>
+                                        <select class="form-select" aria-label="Default select example" disabled>
+                                            <option selected><?php echo $grupo?></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-lg-1 col-form-label me-4" for="name">Celular</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="6655778657" required>
+                                        <input type="text" class="form-control" id="name" name="name" 
+                                            value="<?php echo $celular?>" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-3">
                                     <label class="col-lg-1 col-form-label me-4" for="name">Correo</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="fdsfijds@gmail.com" 
-                                            required>
+                                        <input type="text" class="form-control" id="name" name="name" 
+                                            value="<?php echo $correo?>" readonly>
                                     </div>
                                 </div>
                                 <div class="card position-relative">
                                     <h5 class="card-header">Dirección</h5>
                                     <div class="card-body">
-                                    <form>
                                         <div class="form-group row mb-3">
                                             <div class="col-lg-8 form-floating mb-3">
-                                                <input type="text" class="form-control" name="name" placeholder="Calle" required>
+                                                <input type="text" class="form-control" name="name" 
+                                                value="<?php echo $calle?>" readonly>
                                                 <label for="name" class="ps-4">Calle</label>
                                             </div>
                                             <div class="col-lg-3 form-floating mb-3">
-                                                <input type="text" class="form-control" name="name" placeholder="Numero" required>
+                                                <input type="text" class="form-control" name="name" 
+                                                    value="<?php echo $numero?>" readonly>
                                                 <label for="name" class="ps-4">Número</label>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-3">
-                                        <label class="col-lg-2 col-form-label me-4" for="name">Colonia</label>
+                                            <label class="col-lg-2 col-form-label me-4" for="name">Colonia</label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Tepalcates" 
-                                                    required>
+                                                <input type="text" class="form-control" id="name" name="name" 
+                                                    value="<?php echo $colonia?>" readonly>
                                             </div>
                                             <label class="col-lg-1"></label>
                                             <label class="col-lg-2 col-form-label" for="name">Municipo</label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Iztapalapa" 
-                                                    required>
+                                                <input type="text" class="form-control" id="name" name="name" 
+                                                value="<?php echo $municipio?>" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row mb-3">
                                             <label for="name" class="col-lg-2 col-form-label me-4">C.P.</label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" name="name" placeholder="C.P." required>
+                                                <input type="text" class="form-control" name="name" 
+                                                    value="<?php echo $cp?>" readonly>
                                             </div>
                                             <label class="col-lg-1"></label>
                                             <label class="col-lg-2 col-form-label" for="name">Entidad</label>
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="CDMX" required>
+                                                <input type="text" class="form-control" id="name" name="name" 
+                                                    value="<?php echo $entidad?>" readonly>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mt-3">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" name="btnComment" class="btn btn-primary">Aceptar</button>
-                            </div>
-                            </form>
+                            <?php } ?>
                         </div>
                         <div class="tab-pane fade p-3" id="v-pills-pago" role="tabpanel" aria-labelledby="v-pills-pago-tab">
                             <!------------- PAGO ------------------>
@@ -160,7 +189,7 @@
                                 <div class="mb-3">
                                     <center>
                                         <button type="button" class="btn btn-dark" data-bs-toggle="modal" 
-                                            data-bs-target="#pagoModal">
+                                            data-bs-target="#pagoModal" required>
                                             Subir comprobante
                                         </button>
                                     </center>
@@ -176,30 +205,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="table-group-divider">
+                                                <?php
+                                                    $i = 0;
+                                                    $query = "SELECT h.*, d.documento, d.validacion FROM historial h 
+                                                    JOIN documento d ON h.id_alumno = d.id_alumno 
+                                                    WHERE h.id_alumno = 50 
+                                                    AND d.documento = 'Comprobante de pago' 
+                                                    AND d.id_documento = h.id_documento";
+                                                    $result = $connection->query($query);
+
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        $i = 1;
+                                                        $grado = $row['grado'];
+                                                        $validacion = $row['validacion'];
+
+                                                        $grado = $grado . "°";
+                                                ?>
                                                 <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Sin registro</td>
+                                                    <th scope="row"><?php echo $grado?></th>
+                                                    <td class="text-uppercase"><?php echo $validacion?></td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Pagado</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td colspan="2">Pendiente</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">4</th>
-                                                    <td colspan="2">Sin registro</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">5</th>
-                                                    <td colspan="2">Sin registro</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">6</th>
-                                                    <td colspan="2">Sin registro</td>
-                                                </tr>
+                                                <?php } ?>
+                                                <?php if ($i == 0):?>
+                                                    <tr>
+                                                        <th scope="row">-</th>
+                                                        <td class="text-uppercase">Sin registro</td>
+                                                    </tr>
+                                                <?php endif?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -210,11 +242,11 @@
                             <!------------- CERTIFICADO ------------------>
                             <div class="container">
                                 <div class="mb-3">
-                                    <h2>Certificado Medico</h2>
+                                    <h2>Certificado Médico</h2>
                                     <div class="mb-5">
                                         <center>
                                             <button type="button" class="btn btn-dark" data-bs-toggle="modal" 
-                                                data-bs-target="#certificadoModal">
+                                                data-bs-target="#certificadoModal" required>
                                                 Subir certificado
                                             </button>
                                         </center>
@@ -231,30 +263,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="table-group-divider">
+                                                <?php
+                                                    $i = 0;
+                                                    $query = "SELECT h.*, d.documento, d.validacion FROM historial h 
+                                                    JOIN documento d ON h.id_alumno = d.id_alumno 
+                                                    WHERE h.id_alumno = 50 
+                                                    AND d.documento = 'Certificado Médico' 
+                                                    AND d.id_documento = h.id_documento";
+                                                    $result = $connection->query($query);
+                                                    
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        $i = 1;
+                                                        $grado = $row['grado'];
+                                                        $validacion = $row['validacion'];
+                                                        
+                                                        $grado = $grado . "°";
+                                                ?>
                                                 <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Sin registro</td>
+                                                    <th scope="row"><?php echo $grado?></th>
+                                                    <td class="text-uppercase"><?php echo $validacion?></td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Pagado</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td colspan="2">Pendiente</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">4</th>
-                                                    <td colspan="2">Sin registro</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">5</th>
-                                                    <td colspan="2">Sin registro</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">6</th>
-                                                    <td colspan="2">Sin registro</td>
-                                                </tr>
+                                                <?php } ?>
+                                                <?php if ($i == 0):?>
+                                                    <tr>
+                                                        <th scope="row">-</th>
+                                                        <td class="text-uppercase">Sin registro</td>
+                                                    </tr>
+                                                <?php endif?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -274,17 +309,17 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Subir datos</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form method="POST" action="">
+                        <form method="POST" action="../db/insert_pago.php" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <h5 class="mb-3"><b>Advertencia</b>: una vez confirmado no se podrá modificar</h5>
                                     <label class="form-label">Comprobante de pago</label>
-                                    <input type="file" class="form-control" name="name" required>
+                                    <input type="file" class="form-control" name="doc_pago" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" name="addProfesor" class="btn btn-success">Subir</button>
+                                <button type="submit" name="btnPago" class="btn btn-success">Enviar</button>
                             </div>
                         </form>
                     </div>
@@ -299,17 +334,17 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Subir datos</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form method="POST" action="">
+                        <form method="POST" action="../db/insert_certMedico.php" enctype="multipart/form-data">
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <h5 class="mb-3"><b>Advertencia</b>: una vez confirmado no se podrá modificar</h5>
                                     <label class="form-label">Certificado medico</label>
-                                    <input type="file" class="form-control" name="name" required>
+                                    <input type="file" class="form-control" name="doc_medico" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" name="addProfesor" class="btn btn-success">Subir</button>
+                                <button type="submit" name="btnMedico" class="btn btn-success">Subir</button>
                             </div>
                         </form>
                     </div>
