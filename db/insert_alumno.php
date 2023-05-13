@@ -88,6 +88,28 @@
         }
     }
 
+    function obtenerGrupo($grado) {
+        /* ID - GRUPO
+            1 - 1A
+            3 - 2A
+            5 - 3A
+            7 - 4A
+            9 - 5A
+            11 - 6A
+            13 - Ninguno
+        */
+        $grupos = array(
+            1 => 1,
+            2 => 3,
+            3 => 5,
+            4 => 7,
+            5 => 9,
+            6 => 11,
+            'Ninguno' => 13
+        );
+    
+        return $grupos[$grado] ?? null;
+    }
 
     if (isset($_POST['btnRegistro'])) {
         include("db.php");
@@ -110,79 +132,68 @@
             'Comprobante de domicilio',
             'Documento de boleta/kinder'
         ];
-
-        // Insertar el registro en la tabla "grupo"
+            
+        $nombre = mysqli_real_escape_string($connection, $_POST['nombre']);
+        $apPaterno = mysqli_real_escape_string($connection, $_POST['apPaterno']);
+        $apMaterno = mysqli_real_escape_string($connection, $_POST['apMaterno']);
+        $edad = mysqli_real_escape_string($connection, $_POST['edad']);
+        $fecha_nacimiento = mysqli_real_escape_string($connection, $_POST['nacimiento']);
         $grado = mysqli_real_escape_string($connection, $_POST['grado']);
-        $sqlGrupo = "INSERT INTO grupo (id_profesor, grupo) VALUES (?, ?)";
-        $stmtGrupo = $connection->prepare($sqlGrupo);
-        $stmtGrupo->bind_param("is", $null, $grado);
+        $curp = mysqli_real_escape_string($connection, $_POST['curp']);
+        $genero = mysqli_real_escape_string($connection, $_POST['genero']);
+        $correo = mysqli_real_escape_string($connection, $_POST['correo']);
+        $celular = mysqli_real_escape_string($connection, $_POST['tel']);
+        $tutor = mysqli_real_escape_string($connection, $_POST['tutor']);
 
-        if ($stmtGrupo->execute()) {
-            // Obtener el ID del grupo recién insertado 
-            $idGrupo = $stmtGrupo->insert_id;
+        $dir_calle = mysqli_real_escape_string($connection, $_POST['calle']);
+        $dir_numero = mysqli_real_escape_string($connection, $_POST['num']);
+        $dir_colonia = mysqli_real_escape_string($connection, $_POST['col']);
+        $dir_cp = mysqli_real_escape_string($connection, $_POST['cp']);
+        $dir_municipio = mysqli_real_escape_string($connection, $_POST['mun']);
+        $dir_entidad = mysqli_real_escape_string($connection, $_POST['entidad']);
 
-            $nombre = mysqli_real_escape_string($connection, $_POST['nombre']);
-            $apPaterno = mysqli_real_escape_string($connection, $_POST['apPaterno']);
-            $apMaterno = mysqli_real_escape_string($connection, $_POST['apMaterno']);
-            $edad = mysqli_real_escape_string($connection, $_POST['edad']);
-            $fecha_nacimiento = mysqli_real_escape_string($connection, $_POST['nacimiento']);
-            $curp = mysqli_real_escape_string($connection, $_POST['curp']);
-            $genero = mysqli_real_escape_string($connection, $_POST['genero']);
-            $correo = mysqli_real_escape_string($connection, $_POST['correo']);
-            $celular = mysqli_real_escape_string($connection, $_POST['tel']);
-            $tutor = mysqli_real_escape_string($connection, $_POST['tutor']);
+        $idGrupo = obtenerGrupo($grado);
 
-            $dir_calle = mysqli_real_escape_string($connection, $_POST['calle']);
-            $dir_numero = mysqli_real_escape_string($connection, $_POST['num']);
-            $dir_colonia = mysqli_real_escape_string($connection, $_POST['col']);
-            $dir_cp = mysqli_real_escape_string($connection, $_POST['cp']);
-            $dir_municipio = mysqli_real_escape_string($connection, $_POST['mun']);
-            $dir_entidad = mysqli_real_escape_string($connection, $_POST['entidad']);
+        $sqlAlumno = "INSERT INTO alumno (id_usuario, id_grupo, status, nombre, ap_paterno, ap_materno, edad, curp, 
+                    fecha_nacimiento, genero, celular, correo, tutor, dir_calle, dir_numero, dir_colonia, dir_municipio, 
+                    dir_cp, dir_entidad) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmtAlumno = $connection->prepare(trim($sqlAlumno));
+        $stmtAlumno->bind_param("iisssssssssssssssss", $idUsuario, $idGrupo, $status, $nombre, $apPaterno, $apMaterno, $edad, 
+                                        $curp, $fecha_nacimiento, $genero, $celular, $correo, $tutor, $dir_calle, $dir_numero, 
+                                        $dir_colonia, $dir_municipio, $dir_cp, $dir_entidad);
 
+        if ($stmtAlumno->execute()) {
+            // Obtener el ID del alumno recién insertado
+            $idAlumno = $stmtAlumno->insert_id;
 
-            $sqlAlumno = "INSERT INTO alumno (id_usuario, id_grupo, status, nombre, ap_paterno, ap_materno, edad, curp, 
-                        fecha_nacimiento, genero, celular, correo, tutor, dir_calle, dir_numero, dir_colonia, dir_municipio, 
-                        dir_cp, dir_entidad) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmtAlumno = $connection->prepare(trim($sqlAlumno));
-            $stmtAlumno->bind_param("iisssssssssssssssss", $idUsuario, $idGrupo, $status, $nombre, $apPaterno, $apMaterno, $edad, 
-                                            $curp, $fecha_nacimiento, $genero, $celular, $correo, $tutor, $dir_calle, $dir_numero, 
-                                            $dir_colonia, $dir_municipio, $dir_cp, $dir_entidad);
+            // Recorrer los archivos recibidos
+            foreach ($archivos as $nombreArchivo => $archivo) {
+                $nombreArchivo = $idAlumno . "-" . basename($archivo['name']);
+                $rutaArchivo = $uploadDirectory . $nombreArchivo;
+                $rutaBase = $url . $nombreArchivo;
 
-            if ($stmtAlumno->execute()) {
-                // Obtener el ID del alumno recién insertado
-                $idAlumno = $stmtAlumno->insert_id;
+                // Mover el archivo a la carpeta de destino
+                if (move_uploaded_file($archivo['tmp_name'], $rutaArchivo)) {
+                    // Insertar información del archivo en la base de datos
+                    $sqlArchivo = "INSERT INTO documento (id_alumno, documento, archivo, validacion, fecha) VALUES (?, ?, ?, ?, ?)";
+                    $stmtArchivo = $connection->prepare($sqlArchivo);
+                    $docActual = $documento[$i];
 
-                // Recorrer los archivos recibidos
-                foreach ($archivos as $nombreArchivo => $archivo) {
-                    $nombreArchivo = $idAlumno . "-" . basename($archivo['name']);
-                    $rutaArchivo = $uploadDirectory . $nombreArchivo;
-                    $rutaBase = $url . $nombreArchivo;
-
-                    // Mover el archivo a la carpeta de destino
-                    if (move_uploaded_file($archivo['tmp_name'], $rutaArchivo)) {
-                        // Insertar información del archivo en la base de datos
-                        $sqlArchivo = "INSERT INTO documento (id_alumno, documento, archivo, validacion, fecha) VALUES (?, ?, ?, ?, ?)";
-                        $stmtArchivo = $connection->prepare($sqlArchivo);
-                        $docActual = $documento[$i];
-
-                        $stmtArchivo->bind_param("issss", $idAlumno, $docActual, $rutaBase, $validacion, $date);
-                        $stmtArchivo->execute();
-                        $stmtArchivo->close();
-                        $i += 1;
-                    }
+                    $stmtArchivo->bind_param("issss", $idAlumno, $docActual, $rutaBase, $validacion, $date);
+                    $stmtArchivo->execute();
+                    $stmtArchivo->close();
+                    $i += 1;
                 }
-                $resultado = generarCorreoYPass($nombre, $apPaterno, $apMaterno, $idAlumno);
-                $email = $resultado["correo"];
-                $password = $resultado["password"];
-                enviarCorreo($email, $password);
-            } else {
-                echo 'ERROR :(';
             }
-
-            $stmtAlumno->close();
-            $stmtGrupo->close();
-            $connection->close();
+            $resultado = generarCorreoYPass($nombre, $apPaterno, $apMaterno, $idAlumno);
+            $email = $resultado["correo"];
+            $password = $resultado["password"];
+            enviarCorreo($email, $password);
+        } else {
+            echo 'ERROR :(';
         }
+        $stmtAlumno->close();
+        $connection->close();
     }
 ?>
