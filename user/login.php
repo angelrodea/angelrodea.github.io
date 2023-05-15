@@ -38,6 +38,7 @@
                 $grado = $grupo[0];
                 $_SESSION['user']['grado'] = $grado;
                 $_SESSION['user']['status'] = $status;
+                $_SESSION['user']['correo'] = $userok;
                 /*echo "<pre>";
                 print_r($_SESSION['user']);
                 echo "</pre>";*/
