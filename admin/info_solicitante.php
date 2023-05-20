@@ -103,7 +103,7 @@
                                     <label class="col-lg-1 col-form-label me-4" for="name">Grupo</label>
                                     <div class="col-lg-2 ps-0">
                                         <select class="form-select" aria-label="Default select example" disabled>
-                                            <option selected><?php echo $grupo?></option>
+                                            <option selected>-</option>
                                         </select>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
                                                 ?>
                                                     <tr>
                                                         <td scope="row"><?php echo $doc?></td>
-                                                        <td><a href="#"><?php echo $nombreArchivo;?></a></td>
+                                                        <td><a href="<?php echo $archivo?>"><?php echo $nombreArchivo;?></a></td>
                                                         <td>
                                                             <select name="validacion[]" id="<?php echo $idDoc?>" required>
                                                                 <option selected>Seleccionar</option>
