@@ -126,31 +126,30 @@
         $documento = [
             'Acta de nacimiento',
             'CURP',
-            'Certificado médico',
             'Formato inscripción',
             'INE del tutor',
             'Comprobante de domicilio',
             'Documento de boleta/kinder'
         ];
             
-        $nombre = mysqli_real_escape_string($connection, $_POST['nombre']);
-        $apPaterno = mysqli_real_escape_string($connection, $_POST['apPaterno']);
-        $apMaterno = mysqli_real_escape_string($connection, $_POST['apMaterno']);
-        $edad = mysqli_real_escape_string($connection, $_POST['edad']);
-        $fecha_nacimiento = mysqli_real_escape_string($connection, $_POST['nacimiento']);
-        $grado = mysqli_real_escape_string($connection, $_POST['grado']);
-        $curp = mysqli_real_escape_string($connection, $_POST['curp']);
-        $genero = mysqli_real_escape_string($connection, $_POST['genero']);
-        $correo = mysqli_real_escape_string($connection, $_POST['correo']);
-        $celular = mysqli_real_escape_string($connection, $_POST['tel']);
-        $tutor = mysqli_real_escape_string($connection, $_POST['tutor']);
+        $nombre = $_POST['nombre'];
+        $apPaterno = $_POST['apPaterno'];
+        $apMaterno = $_POST['apMaterno'];
+        $edad = $_POST['edad'];
+        $fecha_nacimiento = $_POST['nacimiento'];
+        $grado = $_POST['grado'];
+        $curp = $_POST['curp'];
+        $genero = $_POST['genero'];
+        $correo = $_POST['correo'];
+        $celular = $_POST['tel'];
+        $tutor = $_POST['tutor'];
 
-        $dir_calle = mysqli_real_escape_string($connection, $_POST['calle']);
-        $dir_numero = mysqli_real_escape_string($connection, $_POST['num']);
-        $dir_colonia = mysqli_real_escape_string($connection, $_POST['col']);
-        $dir_cp = mysqli_real_escape_string($connection, $_POST['cp']);
-        $dir_municipio = mysqli_real_escape_string($connection, $_POST['mun']);
-        $dir_entidad = mysqli_real_escape_string($connection, $_POST['entidad']);
+        $dir_calle = $_POST['calle'];
+        $dir_numero = $_POST['num'];
+        $dir_colonia = $_POST['col'];
+        $dir_cp = $_POST['cp'];
+        $dir_municipio = $_POST['mun'];
+        $dir_entidad = $_POST['entidad'];
 
         $idGrupo = obtenerGrupo($grado);
 
