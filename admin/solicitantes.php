@@ -21,7 +21,6 @@
                     <tbody>
                         <?php
                             include("../db/db.php");
-                            $valido = 0;
                             $query = "SELECT a.id_alumno, a.nombre, a.ap_paterno, a.ap_materno, g.grupo, a.curp FROM alumno a
                                     INNER JOIN grupo g ON a.id_grupo = g.id_grupo WHERE a.status = 'solicitante'";
                             $result = $connection->query($query);
@@ -33,6 +32,7 @@
                             }
 
                             while ($row = $result->fetch_assoc()) {
+                                $valido = 0;
                                 $id = $row['id_alumno'];
                                 
                                 $nombre = $row['nombre'];
