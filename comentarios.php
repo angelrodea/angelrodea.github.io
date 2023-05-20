@@ -1,34 +1,13 @@
-<?php 
-    include("template/header.php"); 
-    include("db/db.php");
-    $mensajeError = "";
-
-
-    if(isset($_POST['btnComment'])) {
-        $name = mysqli_real_escape_string($connection, $_POST['name']);
-        $key = mysqli_real_escape_string($connection, $_POST['key']);
-        $comment = mysqli_real_escape_string($connection, $_POST['comment']);
-        if ($key == 123) {
-            $params = '?name=' . urlencode($name) . '&comment=' . urlencode($comment);
-            header("Location: http://localhost/app/db/insert_comment.php" . $params);
-        } else {
-            $mensajeError.="<div class='alert alert-warning alert-dismissible fade show text-center' role='alert'>
-                <strong>Key incorrecta :(</strong>
-                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                </div>";
-        }
-    }
-?>
+<?php include("template/header.php");?>
     <main>
         <div class="container">
             <h1 class="mb-4">Comentarios</h1>
             <?php
-                echo $mensajeError;
+                include("db/db.php");
                 $query = "SELECT c.id_comentario, a.tutor, c.comentario, c.fecha FROM comentario c
                         INNER JOIN alumno a ON c.id_alumno = a.id_alumno";
                 $result = $connection->query($query);
 
-                // Renderizar el template para cada comentario
                 while ($row = $result->fetch_assoc()) {
                     $id = $row['id_comentario'];
                     $nombre = $row['tutor'];
@@ -36,7 +15,7 @@
                     $comentario = nl2br(str_replace("\\r\\n", "\n", $comentario));
                     $fecha = $row['fecha'];
             ?>
-                    <div class="my-3">
+                    <div class="my-3 mb-4">
                         <div class="mb-2 row">
                             <h4 class="col-md-9">Nombre:  <?php echo $nombre ?> </h4>
                             <span class="col-md-2 pt-2 text-end"> <?php echo $fecha ?> </span>
@@ -63,10 +42,13 @@
                     </div>
             <?php } ?>
 
-            <div class="text-center mb-4">
-                <button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" 
-                data-bs-target="#commentModal">Comentar</button>
-            </div>
+            <?php if (verifySessionUser()): ?>
+                <div class="text-center mb-4">
+                    <button type="button" class="btn btn-dark text-uppercase" data-bs-toggle="modal" 
+                    data-bs-target="#commentModal">Comentar</button>
+                </div>
+            <?php endif;?>
+
             <!-- Modal Comment -->
             <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -75,16 +57,8 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Comentar</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form method="POST">
+                        <form method="POST" action="db/insert_comment.php">
                             <div class="modal-body">
-                                <div class="mb-3">
-                                    <label class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Nombre" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Clave</label>
-                                    <input type="text" class="form-control" name="key" placeholder="*******" required>
-                                </div>
                                 <div class="mb-3">
                                     <label class="form-label">Comentario</label>
                                     <textarea class="form-control" name="comment" rows="3" required></textarea>
