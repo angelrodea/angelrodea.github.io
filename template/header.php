@@ -13,7 +13,16 @@
         header("Location: http://localhost/app/user/login.php");
         exit;
     }
-    function verifySession(){
+
+    function verifySession() {
+        if (isset($_SESSION['admin'])) {
+            return true; 
+        } else {
+            return false;
+        }
+    }
+
+    function verifySessionUser(){
         if (isset($_SESSION['user'])) {
             return true;
         } else {
@@ -75,12 +84,19 @@
                         </ul>
                         <?php if (verifySession()): ?>
                             <form method="post" class="d-flex">
-                                <a href="user/usuario.php" class="btn btn-outline-light me-3">Mi Prefil</a>
+                                <a href="admin/solicitantes.php" class="btn btn-outline-light me-3">Administrar</a>
                             </form>
                             <form method="post" class="d-flex">
                                 <input type="submit" name="logout" value="Cerrar Sesión" class="btn btn-outline-danger">
                             </form>
                         <!------------------- BORRAR ------------------------->
+                        <?php elseif (verifySessionUser()): ?>
+                            <form method="post" class="d-flex">
+                                <a href="user/usuario.php" class="btn btn-outline-light me-3">Mi Prefil</a>
+                            </form>
+                            <form method="post" class="d-flex">
+                                <input type="submit" name="logout" value="Cerrar Sesión" class="btn btn-outline-danger">
+                            </form>
                         <?php else: ?>
                             <form method="post" class="d-flex">
                                 <input type="submit" name="login" value="Iniciar Sesión" class="btn btn-outline-light">
