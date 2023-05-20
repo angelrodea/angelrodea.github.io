@@ -88,4 +88,94 @@ if (window.location.pathname.endsWith("admisiones.php")) {
             campoKinder.style.display = "none";
         }
     });
-}  
+}
+
+// PROCESO DE ADMISION
+
+$(document).ready(function() {
+    // Obtener el valor del grupo seleccionado
+    var grupo = $("#select-grupo").val();
+
+    // Cargar la tabla del grupo seleccionado
+    cargarTablaAlumnos(grupo);
+
+    // Manejar el evento de cambio en el select
+    $("#select-grupo").change(function() {
+        var grupoSeleccionado = $(this).val();
+        cargarTablaAlumnos(grupoSeleccionado);
+    });
+
+    // Función para cargar la tabla de alumnos
+    function cargarTablaAlumnos(grupo) {
+        $.ajax({
+            url: "../db/get_grupo.php",
+            type: "POST",
+            data: { grupo: grupo },
+            dataType: "html",
+            success: function(data) {
+                $("#tbl-alumno tbody").html(data);
+            }
+        });
+    }
+});
+
+function ocultarColumnaAcciones() {
+    var links = document.querySelectorAll("#tbl-alumno a"); // Obtener todos los elementos <a> dentro de la tabla
+    links.forEach(function(link) {
+        link.classList.add("btn"); // Agregar la clase "btn" a cada elemento <a>
+    });
+
+    var tabla = document.getElementById('tbl-alumno');
+    var filas = tabla.getElementsByTagName('tr');
+
+    for (var i = 0; i < filas.length; i++) {
+        var celdaAcciones = filas[i].getElementsByTagName('td')[5]; // Índice de la columna "Acciones"
+        var celdaAccionH = filas[i].getElementsByTagName('th')[5];
+        if (celdaAcciones) {
+            celdaAcciones.classList.add('hide-column');
+        }
+        if (celdaAccionH) {
+            celdaAccionH.classList.add('hide-column');
+        }
+    }
+}
+
+function imprimir() {
+    ocultarColumnaAcciones();
+    var maintable = document.getElementById('tbl-alumno');
+
+    var doc = new jsPDF('p', 'pt', 'letter');
+    var margin = 20; /*margen de la pagina*/
+    var scale = (doc.internal.pageSize.width - margin * 2) / document.body.clientWidth; /*ancho de la pagina para escritorio*/
+    var scale_mobile = (doc.internal.pageSize.width - margin * 2) / document.body.getBoundingClientRect();
+
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        /*Si el dispositivo es un telefono movil*/
+        doc.html(maintable, {
+            x: margin,
+            y: margin,
+            html2canvas:{
+                scale: scale_mobile,
+            },
+            callback: function(doc){
+                doc.output('dataurlnewwindow', {filename: 'pdf.pdf'});
+            }
+        });
+    } else{
+        /*Si es dispositivo es una PC o escritorio*/ 
+        doc.html(maintable, {
+            x: margin,
+            y: margin,
+            html2canvas:{
+                scale: scale,
+            },
+            callback: function(doc){
+                doc.output('dataurlnewwindow', {filename: 'pdf.pdf'}); /*crear el pdf y abrir una nueva ventana en el navegador*/
+            }
+        });
+    }
+    doc.autoPrint();
+    setTimeout(function() {
+        location.reload();
+    }, 3000);
+}
