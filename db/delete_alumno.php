@@ -15,7 +15,8 @@
             $stmtAlumno->bind_param("i", $id);
 
             if ($stmtAlumno->execute()) {
-                header("Location: http://localhost/app/admin/solicitantes.php");
+                $previousPage = $_SERVER['HTTP_REFERER'];
+                header("Location: $previousPage");
                 exit;
             } else {
                 echo "Error al eliminar el alumno: " . $stmtAlumno->error;
