@@ -171,11 +171,7 @@
                                 <label class="col-lg-3 col-form-label" for="doc_curp">CURP</label>
                                 <div class="col-lg-9 mb-2">
                                     <input type="file" class="form-control" name="doc_curp" required>
-                                </div>
-                                <label class="col-lg-3 col-form-label" for="doc_medico">Certificado médico</label>
-                                <div class="col-lg-9 mb-2">
-                                    <input type="file" class="form-control" name="doc_medico" required>
-                                </div>
+                                </div> 
                                 <label class="col-lg-3 col-form-label" for="doc_inscripcion">Formato inscripción</label>
                                 <div class="col-lg-9 mb-2">
                                     <input type="file" class="form-control" name="doc_inscripcion" required>
