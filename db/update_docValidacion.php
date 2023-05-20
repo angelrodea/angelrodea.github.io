@@ -20,7 +20,7 @@
                 $stmtUpdate->bind_param("si", $validacion, $idDoc);
 
                 if ($stmtUpdate->execute()) {
-                    echo "ID: $idDooc <br>Validacion: $validacion";
+                    echo "ID: $idDoc <br>Validacion: $validacion";
                 } else {
                     echo "Error al actualizar el documento con idDoc = $idDoc <br>";
                 }
