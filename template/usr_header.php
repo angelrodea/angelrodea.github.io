@@ -1,6 +1,18 @@
 <?php 
     #<!------------------- Sesión ------------------------->
     session_start();
+    function verifySession(){
+        if (isset($_SESSION['user'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    if (verifySession() != true) {
+        header("Location: http://localhost/app/user/login.php");
+        exit;
+    }
+
     if (isset($_POST['logout'])) {
         session_unset();
         session_destroy();
