@@ -180,10 +180,13 @@
                             <div class="container">
                                 <div class="mb-3">
                                     <h2>Forma de pago</h2>
-                                    <div class="border bg-border border-dark rounded-3">
-                                        <h1>1</h1>
-                                        <h1>1</h1>
-                                        <h1>1</h1>
+                                    <div class="p-3">
+                                        <center>
+                                            <img src="../img/tarjeta-pago.jpg" class="rounded img-fluid mb-3" alt="" width="380">
+                                            <br>
+                                            <a href="../doc/Datos-de-pago.pdf">Mas información</a>
+                                        </center>
+                                        <hr class="my-4">
                                     </div>
                                 </div>
                                 <div class="mb-3">
