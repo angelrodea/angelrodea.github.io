@@ -1,29 +1,30 @@
 <?php 
     #<!------------------- Sesión ------------------------->
     session_start();
+
+    function verifySession(){
+        if (isset($_SESSION['admin'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    if (verifySession() != true) {
+        header("Location: http://localhost/app/admin/login.php");
+        exit;
+    }
+
     if (isset($_POST['logout'])) {
         session_unset();
         session_destroy();
         header("Location: http://localhost/app/index.php");
         exit;
     }
-    #<!------------------- Pruebas ------------------------->
-    #<!------------------- Borrar ------------------------->
+
     if (isset($_POST['login'])) {
         header("Location: http://localhost/app/admin/login.php");
     }
-    function verifySession(){
-        // Verificar si la variable de sesión existe
-        if (isset($_SESSION['user'])) {
-            if ($_SESSION['user'] == 'admin') {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
+    
     #<!------------------- Clase Activa ------------------------->
     function claseActiva($pagina) {
         if (basename($_SERVER['PHP_SELF']) == $pagina) {
@@ -68,8 +69,11 @@
                                 <a class="nav-link <?php claseActiva('pendientes.php'); ?>" href="pendientes.php">Pendientes</a>
                             </li>
                             <li class="nav-item nav-mar">
-                                <a class="nav-link <?php claseActiva('grupos.php'); ?>" href="grupos.php">
-                                    Asignación de grupos</a>
+                                <a class="nav-link <?php claseActiva('grupos.php'); ?>" href="grupos.php">Asignación de grupos</a>
+                            </li>
+                            <li class="nav-item nav-mar">
+                                <a class="nav-link <?php claseActiva('asignarProfesor.php'); ?>" href="asignarProfesor.php">
+                                    Asignación de Profesores</a>
                             </li>
                             <li class="nav-item nav-mar">
                                 <a class="nav-link <?php claseActiva('alumnos.php'); ?>" href="alumnos.php">Alumnos</a>
@@ -84,8 +88,5 @@
                     </div>
                 </div>
             </nav>
-            <!--<div class="jumbotron text-center py-3">
-                <h1>Jean Piaget de oriente</h1>
-            </div>-->
         </div>
     </header>
