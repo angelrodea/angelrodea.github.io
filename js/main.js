@@ -91,33 +91,34 @@ if (window.location.pathname.endsWith("admisiones.php")) {
 }
 
 // PROCESO DE ADMISION
-
-$(document).ready(function() {
-    // Obtener el valor del grupo seleccionado
-    var grupo = $("#select-grupo").val();
-
-    // Cargar la tabla del grupo seleccionado
-    cargarTablaAlumnos(grupo);
-
-    // Manejar el evento de cambio en el select
-    $("#select-grupo").change(function() {
-        var grupoSeleccionado = $(this).val();
-        cargarTablaAlumnos(grupoSeleccionado);
-    });
-
-    // Función para cargar la tabla de alumnos
-    function cargarTablaAlumnos(grupo) {
-        $.ajax({
-            url: "../db/get_grupo.php",
-            type: "POST",
-            data: { grupo: grupo },
-            dataType: "html",
-            success: function(data) {
-                $("#tbl-alumno tbody").html(data);
-            }
+if (window.location.pathname.endsWith("alumnos.php")) {
+    $(document).ready(function() {
+        // Obtener el valor del grupo seleccionado
+        var grupo = $("#select-grupo").val();
+    
+        // Cargar la tabla del grupo seleccionado
+        cargarTablaAlumnos(grupo);
+    
+        // Manejar el evento de cambio en el select
+        $("#select-grupo").change(function() {
+            var grupoSeleccionado = $(this).val();
+            cargarTablaAlumnos(grupoSeleccionado);
         });
-    }
-});
+    
+        // Función para cargar la tabla de alumnos
+        function cargarTablaAlumnos(grupo) {
+            $.ajax({
+                url: "../db/get_grupo.php",
+                type: "POST",
+                data: { grupo: grupo },
+                dataType: "html",
+                success: function(data) {
+                    $("#tbl-alumno tbody").html(data);
+                }
+            });
+        }
+    });
+}
 
 function ocultarColumnaAcciones() {
     var links = document.querySelectorAll("#tbl-alumno a"); // Obtener todos los elementos <a> dentro de la tabla
